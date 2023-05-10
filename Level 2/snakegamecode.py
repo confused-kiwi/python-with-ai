@@ -54,11 +54,6 @@ head.direction = "stop"
 
 body = []
 
-def hide_body(body):
-# change snake and body parts to red after collision
-  head.color("red")
-  for part in body:
-    part.color("red")
 
 apple = turtle.Turtle()
 apple.speed(0)
@@ -145,3 +140,9 @@ while not stop:
       update_score(score,high_score)
       stop = True
       break
+
+def hide_body(body):
+# change snake and body parts to red after collision
+  head.color("red")
+  for part in body:
+    part.color("red")

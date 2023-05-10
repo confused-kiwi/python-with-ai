@@ -38,11 +38,11 @@ def move():
     x = head.xcor()
     head.setx(x - 20)
 
-
 win = turtle.Screen()
 win.title("Snake Game: Group 3")
 win.setup(width=600, height=600)
 win.bgcolor("blue")
+win.tracer(0)
 
 head = turtle.Turtle()
 head.speed(0)
@@ -52,13 +52,10 @@ head.penup()
 head.goto(0, 100)
 head.direction = "stop"
 
+high_score = 0
+
 body = []
 
-def hide_body(body):
-# change snake and body parts to red after collision
-  head.color("red")
-  for part in body:
-    part.color("red")
 
 apple = turtle.Turtle()
 apple.speed(0)
@@ -69,6 +66,12 @@ apple.penup()
 apple.goto(0, 0)
 
 #  keyboard binding :DD
+
+def hide_body(body):
+# change snake and body parts to red after collision
+  head.color("red")
+  for part in body:
+    part.color("red")
 
 win.listen()
 win.onkey(go_up, "w")
@@ -85,27 +88,32 @@ pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
 
-def update_score(score,high_score):
+def update_score(score,high_score_local):
   # update score
   pen.clear()
-  pen.write("score: {} High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal"))
+  pen.write("score: {} High Score: {}".format(score, high_score_local), align="center", font=("Courier", 24, "normal"))
 
-update_score(0,0)
-score = 0
-high_score = 0
-delay = 0.155
-stop = False
-while not stop:
+def snakegame():
+  global high_score
+  update_score(0,0)
+  score = 0
+  delay = 0.155
+  stop = False
+  win.bgcolor("blue")
+  body.clear()
+  head.goto(0, 100)
+  apple.goto(0, 0)
+  while not stop:
     win.update()
     move()
     time.sleep(delay)
     win.listen
     if head.distance(apple) < 15:
-    #  make it so the snake can eat the apple
+      #  make it so the snake can eat the apple
         x = random.randint(-220, 220)
         y = random.randint(-220, 220)
         apple.goto(x, y)
-      # make the snake grow
+        # make the snake grow
         part = turtle.Turtle()
         part.speed(0)
         part.shape("square")
@@ -145,3 +153,13 @@ while not stop:
       update_score(score,high_score)
       stop = True
       break
+
+def main():
+  a = "yes"
+  while a != "n":
+    snakegame()
+    a = input("Would you like to continue? (y)es or (n)o")
+
+
+if __name__ == "__main__":
+  main()
