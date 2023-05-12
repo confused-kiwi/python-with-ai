@@ -54,7 +54,7 @@ head.direction = "stop"
 
 high_score = 0
 
-body = []
+body = [head]
 
 
 apple = turtle.Turtle()
@@ -72,6 +72,10 @@ def hide_body(body):
   head.color("red")
   for part in body:
     part.color("red")
+  time.sleep(1)
+  head.color("blue")
+  for part in body:
+    part.color("blue")
 
 win.listen()
 win.onkey(go_up, "w")
@@ -95,13 +99,17 @@ def update_score(score,high_score_local):
 
 def snakegame():
   global high_score
-  update_score(0,0)
+  update_score(0,high_score)
   score = 0
   delay = 0.155
   stop = False
   win.bgcolor("blue")
   body.clear()
   head.goto(0, 100)
+  head.color("cadet blue")
+  head.direction = "stop"
+  for part in body:
+    part.color("cadet blue")
   apple.goto(0, 0)
   while not stop:
     win.update()
@@ -109,6 +117,7 @@ def snakegame():
     time.sleep(delay)
     win.listen
     if head.distance(apple) < 15:
+        print(len(body))
       #  make it so the snake can eat the apple
         x = random.randint(-220, 220)
         y = random.randint(-220, 220)
@@ -154,12 +163,8 @@ def snakegame():
       stop = True
       break
 
-def main():
-  a = "yes"
-  while a != "n":
-    snakegame()
-    a = input("Would you like to continue? (y)es or (n)o")
+
+while True:
+  snakegame()
 
 
-if __name__ == "__main__":
-  main()
