@@ -161,9 +161,6 @@ def snakegame():
     for index in range(len(body)-1,1,-1):
       if body[index].distance(head) < 20:
         hide_body(body)
-        head.color("red")
-        for part in body:
-          part.color("red")
         score = 0
         update_score(score,high_score)
         stop = True

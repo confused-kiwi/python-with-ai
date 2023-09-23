@@ -21,22 +21,37 @@ def go_right():
   if head.direction != "left":
     head.direction = "right"
 
+pre_x = 0
+pre_y = 0
+
 def move():
+  global pre_x
+  global pre_y
   if head.direction == "up":
     y = head.ycor()  #  y cordinates of turtle
+    pre_x = head.xcor()
+    pre_y = head.ycor()
     head.sety(y + 20)
 
   if head.direction == "down":
     y = head.ycor()
+    pre_x = head.xcor()
+    pre_y = head.ycor()
     head.sety(y - 20)
 
   if head.direction == "right":
     x = head.xcor() #  x cordinates of turtle
+    pre_x = head.xcor()
+    pre_y = head.ycor()
     head.setx(x + 20)
 
   if head.direction == "left":
     x = head.xcor()
+    pre_x = head.xcor()
+    pre_y = head.ycor()
     head.setx(x - 20)
+
+
 
 win = turtle.Screen()
 win.title("Snake Game: Group 3")
@@ -52,10 +67,8 @@ head.penup()
 head.goto(0, 100)
 head.direction = "stop"
 
+
 high_score = 0
-
-body = []
-
 
 apple = turtle.Turtle()
 apple.speed(0)
@@ -72,7 +85,6 @@ def hide_body(body):
   head.color("red")
   for part in body:
     part.color("red")
-  time.sleep(1)
   head.color("blue")
   for part in body:
     part.color("blue")
@@ -104,12 +116,12 @@ def snakegame():
   delay = 0.155
   stop = False
   win.bgcolor("blue")
-  body.clear()
+  body = []
   head.goto(0, 100)
   head.color("cadet blue")
   head.direction = "stop"
   for part in body:
-    part.color("cadet blue")
+    part.color("blue")
   apple.goto(0, 0)
   while not stop:
     win.update()
@@ -125,7 +137,7 @@ def snakegame():
         part = turtle.Turtle()
         part.speed(0)
         part.shape("square")
-        part.color("cadet blue")
+        part.color("light slate gray")
         part.penup()
         body.append(part)
         # Increase the score
@@ -137,19 +149,17 @@ def snakegame():
     if len(body) > 0:
         last_part = body.pop()
         body.insert(0,last_part)
-        x = head.xcor()
-        y = head.ycor()
+        x = pre_x
+        y = pre_y
         # move the last part right after the head
         last_part.goto(x, y)
         last_part.showturtle()
+
         
         # Check for body collision
     for index in range(len(body)-1,1,-1):
       if body[index].distance(head) < 20:
         hide_body(body)
-        head.color("red")
-        for part in body:
-          part.color("red")
         score = 0
         update_score(score,high_score)
         stop = True
@@ -165,3 +175,5 @@ def snakegame():
 
 while True:
   snakegame()
+
+
