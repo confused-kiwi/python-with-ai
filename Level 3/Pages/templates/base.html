@@ -1,0 +1,10 @@
+<!-- templates/base.html -->
+{% load static %}
+<header>
+    <img src="{% static 'images/PWALogo.png' %}" width="3%">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+</header>
+
+{% block content %}
+{% endblock content %}
