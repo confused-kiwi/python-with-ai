@@ -2,9 +2,13 @@
 {% extends 'base.html' %}
 
 {% block content%}
+    {% if user.is_authenticated %}
+        <p>Hi {{ user.username }}!</p>
+    {% endif %}
     {% for post in all_posts_list %}
         <div class="post-entry">
             <h2><a href=" {% url 'post_detail' post.pk %} ">{{ post.title }}</a></h2>
+            {{ post.author }} <!--new-->
             <p>{{ post.body }}</p>
         </div>
 {% endfor %}
